@@ -1,7 +1,8 @@
 class ShiftsController < ApplicationController
 
 	def index
-		@shifts = Shift.all
+		filters = filter_params
+		@shifts = filters.present? ?  Shift.where(filters) : Shift.all
 		render json: @shifts, status: :ok
 	end
 
@@ -34,5 +35,8 @@ class ShiftsController < ApplicationController
 	private
 	def shift_params
 		params.require(:shift).permit(:is_field, :position, :is_offering, :shift_date, :is_ocp, :trade_preference, :shift_start, :shift_end, :trade_dates)
+	end
+	def filter_params
+		params.permit(is_field: [], position: [], is_offering: [], is_ocp: [], trade_preference: [])
 	end
 end
