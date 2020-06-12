@@ -30,7 +30,8 @@ gem 'pry-stack_explorer'
 gem 'pry-byebug'
 
 gem 'devise'
-gem 'devise-jwt'
+gem 'doorkeeper'
+gem 'doorkeeper-jwt'
 
 group :development, :test do
 	# Call 'byebug' anywhere in the code to stop execution and get a debugger console

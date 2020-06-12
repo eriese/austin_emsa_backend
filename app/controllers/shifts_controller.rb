@@ -1,4 +1,5 @@
 class ShiftsController < ApplicationController
+	before_action :doorkeeper_authorize!
 
 	def index
 		filters = filter_params

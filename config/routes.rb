@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+	use_doorkeeper do
+		skip_controllers :applications, :authorized_applications
+	end
+
 	devise_for :users,
 	defaults: { format: :json },
 	path: '',
@@ -8,9 +12,10 @@ Rails.application.routes.draw do
 		registration: 'signup'
 	},
 	controllers: {
-		sessions: 'sessions',
+		# sessions: 'sessions',
 		registrations: 'registrations'
-	}
+	},
+	skip: [:sessions]
 	# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 	resources :shifts
 
