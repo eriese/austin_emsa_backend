@@ -1,4 +1,9 @@
 class Shift < ApplicationRecord
+	belongs_to :user
+
+	def self.with_filters(filters, current_user)
+		select('shifts.*, users.email').where(filters).not(user_id: current.id).joins(:user)
+	end
 
 	def self.create_dummy
 		true_false = [true, false]

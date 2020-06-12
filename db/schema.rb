@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_213852) do
+ActiveRecord::Schema.define(version: 2020_06_12_194025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.bigint "resource_owner_id", null: false
+    t.integer "application_id"
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.string "scopes", default: "", null: false
+    t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
+  end
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.bigint "resource_owner_id"
+    t.integer "application_id"
+    t.text "token", null: false
+    t.string "refresh_token"
+    t.integer "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.string "scopes"
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+  end
 
   create_table "shifts", force: :cascade do |t|
     t.boolean "is_field"
@@ -28,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_06_10_213852) do
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -44,4 +69,6 @@ ActiveRecord::Schema.define(version: 2020_06_10_213852) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
+  add_foreign_key "shifts", "users"
 end

@@ -2,12 +2,12 @@ class ShiftsController < ApplicationController
 
 	def index
 		filters = filter_params
-		@shifts = filters.present? ?  Shift.where(filters) : Shift.all
+		@shifts = Shift.with_filters(filters, current_user)
 		render json: @shifts, status: :ok
 	end
 
 	def create
-		@shift = Shift.new(shift_params)
+		@shift = current_user.shifts.new(shift_params)
 		@shift.save
 		respond_with @shift
 	end
