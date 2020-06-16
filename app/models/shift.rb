@@ -1,8 +1,10 @@
 class Shift < ApplicationRecord
 	belongs_to :user
 
+	default_scope {where(shift_date: Date.current..Float::INFINITY)}
+
 	def self.with_filters(filters, current_user)
-		select('shifts.*, users.email').where(filters).not(user_id: current.id).joins(:user)
+		select('shifts.*, users.email').where(filters).where.not(user_id: current_user.id).joins(:user)
 	end
 
 	def self.create_dummy
