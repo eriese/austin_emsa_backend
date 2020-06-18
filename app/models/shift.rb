@@ -7,7 +7,7 @@ class Shift < ApplicationRecord
 		select('shifts.*, users.email').where(filters).where.not(user_id: current_user.id).joins(:user)
 	end
 
-	def self.create_dummy
+	def self.create_dummy(*user_ids)
 		true_false = [true, false]
 		cur_date = Date.current
 
