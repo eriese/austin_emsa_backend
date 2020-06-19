@@ -7,7 +7,7 @@ class ShiftsController < ApplicationController
 			@shifts = current_user.shifts
 		else
 			filters = filter_params
-			@shifts = Shift.with_filters(filters, current_user)
+			@shifts = Shift.unscoped.with_filters(filters, current_user)
 		end
 		render json: @shifts, status: :ok
 	end
@@ -46,6 +46,6 @@ class ShiftsController < ApplicationController
 		params.require(:shift).permit(:is_field, :position, :is_offering, :shift_date, :is_ocp, :trade_preference, :shift_start, :shift_end, :trade_dates, :notes)
 	end
 	def filter_params
-		params.permit(is_field: [], position: [], is_offering: [], is_ocp: [], trade_preference: [])
+		params.permit(:date_type, is_field: [], position: [], is_offering: [], is_ocp: [], trade_preference: [], date: [])
 	end
 end
