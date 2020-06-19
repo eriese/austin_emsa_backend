@@ -9,7 +9,7 @@ class Shift < ApplicationRecord
 
 	def self.create_dummy(*user_ids)
 		true_false = [true, false]
-		cur_date = Date.current
+		cur_date = Date.current + 10.days
 
 		self.create({
 			is_field: true_false.sample,
@@ -19,7 +19,10 @@ class Shift < ApplicationRecord
 			trade_preference: [-1,0,1].sample,
 			shift_date: cur_date - ([1,2,3,-1,-2,-3].sample).days,
 			shift_start: DateTime.new(cur_date.year, cur_date.month, cur_date.day, 7),
-			shift_end: DateTime.new(cur_date.year, cur_date.month, cur_date.day, 19)
+			shift_end: DateTime.new(cur_date.year, cur_date.month, cur_date.day, 19),
+			shift_letter: ['A', 'B', 'C', 'D'].sample,
+			time_frame: [12, 24, -1].sample,
+			user_id: user_ids.sample
 		})
 	end
 end
