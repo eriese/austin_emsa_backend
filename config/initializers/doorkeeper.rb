@@ -245,7 +245,7 @@ Doorkeeper.configure do
 	# For more information go to
 	# https://doorkeeper.gitbook.io/guides/ruby-on-rails/scopes
 	#
-	# default_scopes  :public
+	optional_scopes :web, :native
 	# optional_scopes :write, :update
 
 	# Allows to restrict only certain scopes for grant_type.
@@ -277,7 +277,9 @@ Doorkeeper.configure do
 	# Check out https://github.com/doorkeeper-gem/doorkeeper/wiki/Changing-how-clients-are-authenticated
 	# for more information on customization
 	#
-	access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param, lambda { |request| request.cookies['access_token']  }
+	access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param, lambda { |request|
+		request.cookies['access_token']
+	}
 
 	# Forces the usage of the HTTPS protocol in non-native redirect uris (enabled
 	# by default in non-development environments). OAuth2 delegates security in
@@ -429,8 +431,7 @@ Doorkeeper.configure do
 	#   Rails.logger.info(context.pre_auth.inspect)
 	# end
 	#
-	after_successful_authorization do |controller, context|
-		controller.response.cookies[:access_token] = {value: context.auth.token.token, httponly: true}
+	# after_successful_authorization do |controller, context|
 		# controller.session[:logout_urls] <<
 		#   Doorkeeper::Application
 		#     .find_by(controller.request.params.slice(:redirect_uri))
@@ -438,7 +439,7 @@ Doorkeeper.configure do
 
 		# Rails.logger.info(context.auth.inspect)
 		# Rails.logger.info(context.issued_token)
-	end
+	# end
 
 	# Under some circumstances you might want to have applications auto-approved,
 	# so that the user skips the authorization step.

@@ -22,7 +22,12 @@ class ShiftsController < ApplicationController
 	end
 
 	def show
-		respond_with Shift.find(params[:id])
+		@shift = Shift.unscoped.find_with_email(params[:id])
+		if @shift
+			render json: @shift, status: :ok
+		else
+			render json: {}, status: :not_found
+		end
 	end
 
 	def update
@@ -46,6 +51,6 @@ class ShiftsController < ApplicationController
 		params.require(:shift).permit(:is_field, :position, :is_offering, :shift_date, :is_ocp, :trade_preference, :shift_start, :shift_end, :trade_dates, :notes)
 	end
 	def filter_params
-		params.permit(:date_type, is_field: [], position: [], is_offering: [], is_ocp: [], trade_preference: [], date: [])
+		params.permit(:date_type, is_field: [], position: [], is_offering: [], is_ocp: [], trade_preference: [], date: [], shift_letter: [])
 	end
 end

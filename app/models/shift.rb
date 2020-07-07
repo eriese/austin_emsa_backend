@@ -3,6 +3,10 @@ class Shift < ApplicationRecord
 
 	default_scope {where(shift_date: Date.current..Float::INFINITY)}
 
+	def self.find_with_email(id)
+		select('shifts.*, users.email').where(id: id).joins(:user).first
+	end
+
 	def self.with_filters(filters, current_user)
 		filter_dates = filters.delete :date
 		first_date = Date.parse(filter_dates[0])
@@ -19,6 +23,9 @@ class Shift < ApplicationRecord
 		else
 			filters[:shift_date] = Date.current..Float::INFINITY
 		end
+
+		filters[:shift_letter]&.map! {|l| l.upcase }
+
 		select('shifts.*, users.email').where(filters).where.not(user_id: current_user.id).joins(:user)
 	end
 
