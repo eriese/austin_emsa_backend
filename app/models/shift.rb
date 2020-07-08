@@ -14,7 +14,9 @@ class Shift < ApplicationRecord
 
 	def shift_end=(new_end)
 		super(new_end)
-		super(normalize_time(shift_end))
+		modified_end = normalize_time(shift_end)
+		modified_end += 1.day if shift_end < shift_start
+		super(modified_end)
 	end
 
 	def self.find_with_email(id)
