@@ -8,14 +8,13 @@ class Shift < ApplicationRecord
 	end
 
 	def shift_start=(new_start)
-		new_start = new_start.change(day: shift_date.day, month: shift_date.month, year: shift_date.year)
 		super(new_start)
+		super(normalize_time(shift_start))
 	end
 
 	def shift_end=(new_end)
-		new_end = new_end.change(day: shift_date.day, month: shift_date.month, year: shift_date.year)
-		new_end.change(day: new_end.day + 1) if new_end < shift_start
 		super(new_end)
+		super(normalize_time(shift_end))
 	end
 
 	def self.find_with_email(id)
@@ -61,5 +60,10 @@ class Shift < ApplicationRecord
 			time_frame: [12, 24, -1].sample,
 			user_id: user_ids.sample
 		})
+	end
+
+	private
+	def normalize_time(time)
+		time.change(day: shift_date.day, month: shift_date.month, year: shift_date.year)
 	end
 end
