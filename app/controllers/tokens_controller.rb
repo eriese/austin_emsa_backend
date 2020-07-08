@@ -1,7 +1,6 @@
 class TokensController < Doorkeeper::TokensController
 
 	def revoke
-		binding.pry
 		if token.blank?
 			render json: {}, status: 200
 		# The authorization server validates [...] and whether the token

@@ -3,6 +3,21 @@ class Shift < ApplicationRecord
 
 	default_scope {where(shift_date: Date.current..Float::INFINITY)}
 
+	def shift_letter=(new_letter)
+		super(new_letter.upcase)
+	end
+
+	def shift_start=(new_start)
+		new_start = new_start.change(day: shift_date.day, month: shift_date.month, year: shift_date.year)
+		super(new_start)
+	end
+
+	def shift_end=(new_end)
+		new_end = new_end.change(day: shift_date.day, month: shift_date.month, year: shift_date.year)
+		new_end.change(day: new_end.day + 1) if new_end < shift_start
+		super(new_end)
+	end
+
 	def self.find_with_email(id)
 		select('shifts.*, users.email').where(id: id).joins(:user).first
 	end
@@ -13,13 +28,13 @@ class Shift < ApplicationRecord
 
 		case filters.delete(:date_type).downcase
 		when 'before'
-			filters[:shift_date] = Date.current...first_date
+			filters[:shift_date] = Date.current..first_date
 		when 'after'
-			filters[:shift_date] = first_date...Float::INFINITY
+			filters[:shift_date] = first_date..Float::INFINITY
 		when 'on'
 			filters[:shift_date] = first_date
 		when 'between'
-			filters[:shift_date] = first_date...Date.parse(filter_dates[1])
+			filters[:shift_date] = first_date..Date.parse(filter_dates[1])
 		else
 			filters[:shift_date] = Date.current..Float::INFINITY
 		end
