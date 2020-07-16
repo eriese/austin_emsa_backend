@@ -115,6 +115,7 @@ en:
         invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
         invalid_grant: Invalid email or password
         unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
+        not_approved: Sorry! Your account has not been approved by your administrator yet, so we can't log you in. You will receive an email when your account is activated
 
         invalid_token:
           revoked: "The access token was revoked"
@@ -122,7 +123,6 @@ en:
           unknown: "The access token is invalid"
         revoke:
           unauthorized: "You are not authorized to revoke this token"
-
     flash:
       applications:
         create:

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'cookie_token_response'
+require 'errors/doorkeeper_errors'
 
 Doorkeeper.configure do
 	# Change the ORM that doorkeeper will use (requires ORM extensions installed).
@@ -8,11 +9,10 @@ Doorkeeper.configure do
 
 	resource_owner_from_credentials do |routes|
 		user = User.find_for_database_authentication(email: params[:email])
-		if user&.valid_for_authentication? { user.valid_password?(params[:password]) } && user&.active_for_authentication?
-			#TODO this needs to return a better error message if the user isn't approved
-		# binding.pry
-		# 	request.env['warden'].set_user(user, scope: :user, store: false)
-			user
+		if user&.valid_for_authentication? { user.valid_password?(params[:password]) }
+			return user if user.active_for_authentication?
+
+			raise EmsaErrors::DoorkeeperErrors::InactiveError.new(user)
 		end
 	end
 
