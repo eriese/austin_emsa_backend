@@ -6,7 +6,8 @@ module CookieTokenResponse
 	def body
 		return super if is_mobile?
 
-		super.except('access_token')
+		user = User.find(token.resource_owner_id)
+		super.except('access_token').merge(admin: user.admin)
 	end
 
 	def headers

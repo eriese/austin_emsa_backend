@@ -10,9 +10,11 @@ Doorkeeper.configure do
 	resource_owner_from_credentials do |routes|
 		user = User.find_for_database_authentication(email: params[:email])
 		if user&.valid_for_authentication? { user.valid_password?(params[:password]) }
-			return user if user.active_for_authentication?
-
-			raise EmsaErrors::DoorkeeperErrors::InactiveError.new(user)
+			if user.active_for_authentication?
+				user
+			else
+				raise EmsaErrors::DoorkeeperErrors::InactiveError.new(user)
+			end
 		end
 	end
 
