@@ -11,7 +11,7 @@ class TokensController < Doorkeeper::TokensController
 			revoke_token
 			render json: {}, status: 200
 		else
-			render json: revocation_error_response, status: :forbidden
+			render json: revocation_error_response, status: :unauthorized
 		end
 	end
 end

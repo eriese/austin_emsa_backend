@@ -13,11 +13,11 @@ Rails.application.routes.draw do
 		registration: 'signup'
 	},
 	controllers: {
-		# sessions: 'sessions',
 		registrations: 'registrations'
 	},
 	skip: [:sessions]
 	# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 	resources :shifts
-
+	get '/users', to: 'users#index'
+	post '/approve', to: 'users#approve'
 end
