@@ -1,8 +1,9 @@
-class TokenInfoController < ApplicationController
+class TokenInfoController < Doorkeeper::TokenInfoController
 	def show
 		def show
 			if doorkeeper_token&.accessible?
-				token_json = doorkeeper_token.as_json.merge(admin: current_user.admin)
+				user = User.find(doorkeeper_token.resource_owner_id)
+				token_json = doorkeeper_token.as_json.merge(admin: user.admin)
 				render json: token_json, status: :ok
 			else
 				error = OAuth::InvalidTokenResponse.new

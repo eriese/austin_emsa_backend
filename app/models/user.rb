@@ -25,7 +25,7 @@ class User < ApplicationRecord
 	end
 
 	def as_json(options = {})
-		super(only: [:id, :email, :approved])
+		super(only: [:id, :email, :approved, :admin])
 	end
 
 	def self.approve(user_ids)

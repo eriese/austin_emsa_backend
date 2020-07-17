@@ -20,5 +20,6 @@ Rails.application.routes.draw do
 	# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 	resources :shifts
 	get '/users', to: 'users#index'
-	post '/approve', to: 'users#approve'
+	post '/bulk_approved', to: 'users#bulk_approved'
+	post '/bulk_admin', to: 'users#bulk_admin'
 end
