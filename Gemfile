@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
@@ -33,6 +33,7 @@ gem 'devise'
 gem 'doorkeeper'
 gem 'doorkeeper-jwt'
 
+gem 'delayed_job'
 gem 'delayed_job_active_record'
 
 group :development, :test do

@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actioncable (6.0.3.1)
       actionpack (= 6.0.3.1)
@@ -189,6 +189,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
+  delayed_job
   delayed_job_active_record
   devise
   doorkeeper
