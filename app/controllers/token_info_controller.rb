@@ -6,7 +6,7 @@ class TokenInfoController < Doorkeeper::TokenInfoController
 				token_json = doorkeeper_token.as_json.merge(admin: user.admin)
 				render json: token_json, status: :ok
 			else
-				error = OAuth::InvalidTokenResponse.new
+				error = Doorkeeper::OAuth::InvalidTokenResponse.new
 				response.headers.merge!(error.headers)
 				render json: error.body, status: error.status
 			end
