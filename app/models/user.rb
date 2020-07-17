@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
 	has_many :shifts
 
+	after_create { AdminDigestJob.schedule }
+
 	def active_for_authentication?
 		super && approved?
 	end
