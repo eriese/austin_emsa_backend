@@ -25,13 +25,14 @@ class TokensController < Doorkeeper::TokensController
 		cookie_args = [
 			"access_token=#{token_string}",
 			"expires=#{expire_in.inspect}",
-			"path=/",
-			"HttpOnly"
+			'path=/',
+			'HttpOnly'
 		]
 
-		# if Rails.env.production?
-		#   cookie_args.push('Secure')
-		# end
+		if Rails.env.production?
+			cookie_args.push('Secure')
+			cookie_args.push('SameSite=None')
+		end
 
 		cookie = cookie_args.join('; ')
 		{'Set-Cookie' => cookie}
