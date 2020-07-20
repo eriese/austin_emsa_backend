@@ -13,18 +13,8 @@ module CookieTokenResponse
 	def headers
 		return super if is_mobile?
 
-		cookie_args = [
-			"access_token=#{token.token}",
-			"Expires=#{DateTime.current + 30.days}",
-			'Path=/',
-			'HttpOnly'
-		]
+		cookie_header = TokensController.cookie_header(token.token, 30.days.from_now)
 
-		# if Rails.env.production?
-		#   cookie_args.push('Secure')
-		# end
-
-		cookie = cookie_args.join('; ')
-		super.merge({'Set-Cookie' => cookie})
+		super.merge(cookie_header)
 	end
 end

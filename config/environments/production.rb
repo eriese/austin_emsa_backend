@@ -59,8 +59,8 @@ Rails.application.configure do
 		address: 'smtp.gmail.com',
 		port: 587,
 		domain: 'austinemsa.org',
-		user_name: 'shiftapp@austinemsa.org',
-		password: Rails.application.credentials.gmail_password
+		user_name: ENV['APP_EMAIL'],
+		password: ENV['APP_EMAIL_PASSWORD']
 	}
 
 	# Ignore bad email addresses and do not raise email delivery errors.
