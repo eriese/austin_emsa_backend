@@ -6,7 +6,8 @@
 # Read more: https://github.com/cyu/rack-cors
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
 	allow do
-		origins 'localhost:8080', 'front.austin_emsa.org:8080'
+		allowed_origins = Rails.env.development? ? ['localhost:8080', 'front.austin_emsa.org:8080'] : ENV['FRONT_URL']
+		origins *allowed_origins
 		resource '*',
 			headers: :any,
 			expose: ["Authorization"],
