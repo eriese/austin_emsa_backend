@@ -5,6 +5,7 @@ class AdminDigestJob < ApplicationJob
 
 	def perform()
 		@@current_job = nil
+		self.class.schedule
 		waiting_users = User.where(approved: nil).count
 		return if waiting_users == 0
 
