@@ -6,4 +6,8 @@ class ApplicationController < ActionController::API
 			warden.authenticate(scope: :user, store: false)
 		end
 	end
+
+	def admin_only
+		render json: {}, status: :unauthorized if !current_user.admin?
+	end
 end

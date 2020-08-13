@@ -19,6 +19,11 @@ Rails.application.routes.draw do
 	skip: [:sessions]
 	# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 	resources :shifts
+
+	get '/codes/count', to: 'redemption_codes#count'
+	post '/codes/upload', to: 'redemption_codes#upload'
+	resources :redemption_codes, path: 'codes', only: [:index, :create]
+
 	get '/users', to: 'users#index'
 	post '/bulk_approved', to: 'users#bulk_approved'
 	post '/bulk_admin', to: 'users#bulk_admin'

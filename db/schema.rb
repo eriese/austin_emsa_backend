@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_203403) do
+ActiveRecord::Schema.define(version: 2020_08_12_134521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(version: 2020_07_15_203403) do
     t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
   end
 
+  create_table "redemption_codes", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_redemption_codes_on_code", unique: true
+  end
+
   create_table "shifts", force: :cascade do |t|
     t.boolean "is_field"
     t.integer "position"
@@ -87,5 +95,6 @@ ActiveRecord::Schema.define(version: 2020_07_15_203403) do
   end
 
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
+  add_foreign_key "redemption_codes", "users"
   add_foreign_key "shifts", "users"
 end

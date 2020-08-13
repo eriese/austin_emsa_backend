@@ -15,6 +15,7 @@ class User < ApplicationRecord
 					 dependent: :delete_all # or :destroy if you need callbacks
 
 	has_many :shifts
+	has_many :redemption_codes
 
 	after_create { AdminDigestJob.schedule }
 

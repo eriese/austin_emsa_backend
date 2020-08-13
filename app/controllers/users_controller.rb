@@ -22,8 +22,4 @@ class UsersController < ApplicationController
 			render json: false, status: :unprocessable_entity
 		end
 	end
-
-	def admin_only
-		render json: {}, status: :unauthorized if !current_user.admin?
-	end
 end
