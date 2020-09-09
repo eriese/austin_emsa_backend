@@ -40,7 +40,11 @@ class User < ApplicationRecord
 
 	def self.approve(user_ids)
 		if User.where(id: user_ids).update_all(approved: true) > 0
-			User.where(id: user_ids, approved: true).each {|u| ApprovedMailer.approved_email(u.id).deliver_later }
+			codes = RedemptionCode.unassigned.limit(user_ids.size)
+			User.where(id: user_ids, approved: true).each_with_index do |u, i|
+				codes[i].update(user_id: u.id) if u.redemption_codes.empty?
+				ApprovedMailer.approved_email(u.id).deliver_later
+			end
 			true
 		else
 			false
