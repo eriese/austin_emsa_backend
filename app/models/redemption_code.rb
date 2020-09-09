@@ -17,13 +17,13 @@ class RedemptionCode < ApplicationRecord
 		creds = Rails.application.credentials.icontact
 		unless creds.present?
 			Rails.logger.warn 'no icontact credentials found'
-			return
+			return false
 		end
 
 		email_codes = unassigned.limit(details.size)
 		if email_codes.size < details.size
 			Rails.logger.warn 'not enough codes to assign to all emails. Upload more codes and try again.'
-			return
+			return false
 		end
 
 		db_update = []
@@ -46,10 +46,11 @@ class RedemptionCode < ApplicationRecord
 
 		unless response.status.success? && response.parse['contacts'].size == details.size
 			Rails.logger.warn 'could not assign codes in icontact', response.body.to_s
-			return
+			return false
 		end
 
 		upsert_all(db_update, unique_by: :code)
 		Rails.logger.info 'successfully assigned codes'
+		return true
 	end
 end
