@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_08_12_134521) do
   create_table "redemption_codes", force: :cascade do |t|
     t.integer "user_id"
     t.string "code"
+    t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_redemption_codes_on_code", unique: true

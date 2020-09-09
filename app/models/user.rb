@@ -31,6 +31,13 @@ class User < ApplicationRecord
 		super(only: [:id, :email, :approved, :admin])
 	end
 
+	def auto_approve
+		app_code_match = RedemptionCode.where(email: email)
+		return unless app_code_match.present?
+
+		ApprovedMailer.approved_email(id).deliver_later if app_code_match.update(user_id: id) && update(approved: true)
+	end
+
 	def self.approve(user_ids)
 		if User.where(id: user_ids).update_all(approved: true) > 0
 			User.where(id: user_ids, approved: true).each {|u| ApprovedMailer.approved_email(u.id).deliver_later }

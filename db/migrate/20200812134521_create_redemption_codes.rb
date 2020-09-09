@@ -3,6 +3,7 @@ class CreateRedemptionCodes < ActiveRecord::Migration[6.0]
 		create_table :redemption_codes do |t|
 			t.integer :user_id
 			t.string :code
+			t.string :email
 			t.timestamps
 			t.index :code, unique: true
 		end

@@ -1,7 +1,7 @@
 class RedemptionCode < ApplicationRecord
-	belongs_to :user
+	belongs_to :user, optional: true
 
-	scope :unassigned, -> {where(user_id: nil)}
+	scope :unassigned, -> {where(user_id: nil, email: nil)}
 
 	def self.first_unassigned
 		unassigned.first
