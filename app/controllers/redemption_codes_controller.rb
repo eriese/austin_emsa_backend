@@ -10,7 +10,11 @@ class RedemptionCodesController < ApplicationController
 	def create
 		new_code = RedemptionCode.first_unassigned
 		if new_code.present?
-			render json: new_code.update(user_id: current_user.id), status: :ok
+			if new_code.update(user_id: current_user.id)
+				render json: new_code, status: :ok
+			else
+				render json: 'Something went wrong. Please try again later', status: :unprocessable_entity
+			end
 		else
 			render json: 'Looks like we ran out of codes. Please contact your administrator.', status: :unprocessable_entity
 		end
