@@ -25,7 +25,7 @@ namespace :icontact do
 			break unless details.present?
 
 			total = details['total']
-			offset = details['offset'] + details['limit']
+			offset += details['limit']
 
 			break unless RedemptionCode.icontact_assign *details['contacts']
 		end
