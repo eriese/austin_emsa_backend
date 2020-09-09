@@ -17,7 +17,7 @@ namespace :icontact do
 		req.parse
 	end
 
-	task :bulk_assign_codes do
+	task :bulk_assign_codes => :setup_logger do
 		offset = 0
 		total = 1000
 		while offset < total
