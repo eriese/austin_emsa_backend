@@ -45,7 +45,8 @@ class RedemptionCode < ApplicationRecord
 			'API-Password' => creds[:password]).post('https://app.icontact.com/icp/a/608950/c/3946/contacts', json: icontact_update)
 
 		unless response.status.success? && response.parse['contacts'].size == details.size
-			Rails.logger.warn 'could not assign codes in icontact', response.body.to_s
+			Rails.logger.warn 'could not assign codes in icontact:'
+			Rails.logger.warn response.body.to_s
 			return false
 		end
 
