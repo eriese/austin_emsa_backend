@@ -31,11 +31,19 @@ class User < ApplicationRecord
 		super(only: [:id, :email, :approved, :admin])
 	end
 
-	def auto_approve
-		app_code_match = RedemptionCode.where(email: email)
-		return unless app_code_match.present?
+	def should_auto_approve?
+		email.match(/\A[^@\s\/\\]+@austintexas\.gov\z/i).present?
+	end
 
-		ApprovedMailer.approved_email(id).deliver_later if app_code_match.update(user_id: id) && update(approved: true)
+	def claim_redemption_codes
+		app_code_match = RedemptionCode.where(email: email)
+		return app_code_match.present? && app_code_match.update(user_id: id)
+	end
+
+	def auto_approve
+		return unless claim_redemption_codes || should_auto_approve?
+
+		ApprovedMailer.approved_email(id).deliver_later if update(approved: true)
 	end
 
 	def self.approve(user_ids)
