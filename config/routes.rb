@@ -27,4 +27,5 @@ Rails.application.routes.draw do
 	get '/users', to: 'users#index'
 	post '/bulk_approved', to: 'users#bulk_approved'
 	post '/bulk_admin', to: 'users#bulk_admin'
+	resources :admin, only: [:index, :update]
 end
