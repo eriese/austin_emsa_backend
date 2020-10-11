@@ -43,7 +43,7 @@ class User < ApplicationRecord
 	def auto_approve
 		return unless claim_redemption_codes || should_auto_approve?
 
-		ApprovedMailer.approved_email(id).deliver_later if update(approved: true)
+		self.class.approve(id)
 	end
 
 	def self.approve(user_ids)
