@@ -3,7 +3,7 @@ class ShiftsController < ApplicationController
 	before_action :doorkeeper_authorize!
 
 	def index
-		if (params[:is_user])
+		if params[:is_user]
 			@shifts = current_user.shifts
 		else
 			filters = filter_params
@@ -44,6 +44,10 @@ class ShiftsController < ApplicationController
 		else
 			respond_with(@shift)
 		end
+	end
+
+	def shift_config
+		render json: AdminConfig.config, status: :ok
 	end
 
 	private

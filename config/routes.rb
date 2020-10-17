@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 	},
 	skip: [:sessions]
 	# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+	get '/shifts/config', to: 'shifts#shift_config'
 	resources :shifts
 
 	get '/codes/count', to: 'redemption_codes#count'
