@@ -37,5 +37,7 @@ module AustinEmsaBackend
 	config.session_store :disabled
 
 	config.active_job.queue_adapter = :delayed_job
+
+	config.action_mailer.default_url_options = routes.default_url_options
 	end
 end
