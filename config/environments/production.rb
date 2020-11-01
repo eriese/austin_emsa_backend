@@ -1,5 +1,5 @@
 Rails.application.routes.default_url_options = {
-	host: ENV['FRONT_URL'].sub(/\Ahttps:\/\//, '')
+	host: ENV['FRONT_URL'].sub(/\Ahttps:\/\//, ''),
 	protocol: 'https'
 }
 
