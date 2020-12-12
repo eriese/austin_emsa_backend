@@ -1,5 +1,6 @@
 class RedemptionCode
 	include Mongoid::Document
+
 	belongs_to :user, optional: true
 	field :code, type: String
 	field :email, type: String

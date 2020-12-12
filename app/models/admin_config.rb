@@ -1,4 +1,6 @@
-class AdminConfig < ApplicationRecord
+class AdminConfig
+	include Mongoid::Document
+	include Mongoid::Attributes::Dynamic
 	after_save :update_map
 	after_destroy :remove_from_map
 

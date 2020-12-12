@@ -1,6 +1,7 @@
-class User < ApplicationRecord
+class User
 	include Mongoid::Document
 	include Mongoid::Timestamps
+	include GlobalID::Identification
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	devise :database_authenticatable, :registerable,
@@ -102,5 +103,8 @@ class User < ApplicationRecord
 			recoverable.send_reset_password_instructions
 		end
 		recoverable
+	end
+
+	def will_save_change_to_email?
 	end
 end
