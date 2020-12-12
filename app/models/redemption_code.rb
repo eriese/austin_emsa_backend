@@ -1,5 +1,9 @@
-class RedemptionCode < ApplicationRecord
+class RedemptionCode
+	include Mongoid::Document
 	belongs_to :user, optional: true
+	field :code, type: String
+	field :email, type: String
+	index({code: 1}, unique: true)
 
 	scope :unassigned, -> {where(user_id: nil, email: nil)}
 

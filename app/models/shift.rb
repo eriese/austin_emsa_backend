@@ -1,7 +1,16 @@
-class Shift < ApplicationRecord
+class Shift
+	include Mongoid::Document
+	include Mongoid::Timestamps
+
 	belongs_to :user
 
-	default_scope {where(shift_date: Date.current..Float::INFINITY)}
+	def self.add_shift_field(shift_field)
+		field shift_field.internal_name.to_sym, type: shift_field.db_type
+	end
+
+	ShiftField.each {|f| add_shift_field(f)}
+
+	default_scope {where(:shift_date.gte => Date.current)}
 
 	def shift_letter=(new_letter)
 		super(new_letter.upcase)
@@ -29,15 +38,17 @@ class Shift < ApplicationRecord
 
 		case filters.delete(:date_type).downcase
 		when 'before'
-			filters[:shift_date] = Date.current..first_date
+			filters[:shift_date.lte] = first_date
+			filters[:shift_date.gte] = Date.current
 		when 'after'
-			filters[:shift_date] = first_date..Float::INFINITY
+			filters[:shift_date.gte] = first_date
 		when 'on'
 			filters[:shift_date] = first_date
 		when 'between'
-			filters[:shift_date] = first_date..Date.parse(filter_dates[1])
+			filters[:shift_date.gte] = first_date
+			filters[:shift_date.lte] = Date.parse(filter_dates[1])
 		else
-			filters[:shift_date] = Date.current..Float::INFINITY
+			filters[:shift_date.gte] = Date.current
 		end
 
 		filters[:shift_letter]&.map! {|l| l.upcase }

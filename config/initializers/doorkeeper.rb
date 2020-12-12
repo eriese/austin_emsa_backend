@@ -5,7 +5,7 @@ require 'errors/doorkeeper_errors'
 Doorkeeper.configure do
 	# Change the ORM that doorkeeper will use (requires ORM extensions installed).
 	# Check the list of supported ORMs here: https://github.com/doorkeeper-gem/doorkeeper#orms
-	orm :active_record
+	orm :mongoid7
 
 	resource_owner_from_credentials do |routes|
 		user = User.find_for_database_authentication(email: params[:email])

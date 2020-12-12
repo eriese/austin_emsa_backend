@@ -7,6 +7,7 @@ ruby '2.7.1'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
+gem 'mongoid', '~> 7.0.5'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -30,11 +31,12 @@ gem 'pry-stack_explorer'
 gem 'pry-byebug'
 
 gem 'devise'
-gem 'doorkeeper'
+gem 'doorkeeper', '~>5.2'
+gem 'doorkeeper-mongodb', '~>5.2'
 gem 'doorkeeper-jwt'
 
 gem 'delayed_job'
-gem 'delayed_job_active_record'
+gem 'delayed_job_mongoid'
 
 gem 'http'
 
