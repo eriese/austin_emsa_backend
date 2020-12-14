@@ -4,7 +4,7 @@ class AdminController < ApplicationController
 	before_action :admin_only
 
 	def index
-		render json: AdminConfig.config
+		render json: {config: AdminConfig.config, fields: ShiftField.as_map}
 	end
 
 	def update

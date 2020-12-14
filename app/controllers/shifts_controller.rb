@@ -13,7 +13,7 @@ class ShiftsController < ApplicationController
 	end
 
 	def create
-		@shift = current_user.shifts.new(shift_params)
+		@shift = current_user.shifts.new(shift_params.merge({user_email: current_user.email}))
 		if @shift.save
 			render json: @shift, status: :ok
 		else
@@ -47,7 +47,7 @@ class ShiftsController < ApplicationController
 	end
 
 	def shift_config
-		render json: AdminConfig.config, status: :ok
+		render json: {config: AdminConfig.config, fields: ShiftField.as_map}, status: :ok
 	end
 
 	private

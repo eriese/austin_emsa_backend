@@ -13,7 +13,11 @@ starter_fields = [{
 	input_label: 'Are you offering a shift or picking up a shift?',
 	value_labels: ['Offering', 'Seeking'],
 	input_value_labels: ['Offering', 'Picking Up'],
-	position: 0
+	position: 0,
+	locked: true,
+	display_in_list: true,
+	list_row: 0,
+	list_column: 0
 },{
 	internal_name: 'is_field',
 	field_type: 'boolean',
@@ -21,7 +25,10 @@ starter_fields = [{
 	filter_label: 'Comm or Field',
 	input_label: 'Is this shift Field or Comm?',
 	value_labels: ['Field', 'Comm'],
-	position: 1
+	position: 1,
+	display_in_list: true,
+	list_row: 2,
+	list_column: 0
 },{
 	internal_name: 'position',
 	field_type: 'integer',
@@ -31,7 +38,10 @@ starter_fields = [{
 	alt_input_label: 'What\'s your position?',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	value_labels: ['Medic', 'CS', 'Captain', 'Commander'],
-	position: 2
+	position: 2,
+	display_in_list: true,
+	list_row: 0,
+	list_column: 2
 },{
 	internal_name: 'is_ocp',
 	field_type: 'boolean',
@@ -41,7 +51,10 @@ starter_fields = [{
 	alt_input_label: 'What type of shift are you looking for?',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	value_labels: ['OCP', 'Shift'],
-	position: 3
+	position: 3,
+	display_in_list: true,
+	list_row: 0,
+	list_column: 1
 },{
 	internal_name: 'unit_number',
 	field_type: 'integer',
@@ -64,7 +77,10 @@ starter_fields = [{
 	input_label: 'Which shift?',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	value_labels: ['A', 'B', 'C', 'D'],
-	position: 5
+	position: 5,
+	display_in_list: true,
+	list_row: 2,
+	list_column: 1
 },{
 	internal_name: 'timeframe',
 	field_type: 'integer',
@@ -74,7 +90,10 @@ starter_fields = [{
 	alt_input_label: 'Should this shift be a 12, a 24, or something else? (explain something else in the notes)',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	value_labels: ['12', '24', 'Other'],
-	position: 6
+	position: 6,
+	display_in_list: true,
+	list_row: 2,
+	list_column: 2
 },{
 	internal_name: 'shift_date',
 	field_type: 'date',
@@ -84,7 +103,9 @@ starter_fields = [{
 	alt_input_label: 'What date are you looking for a shift on?',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	input_type: 'date',
-	position: 7
+	position: 7,
+	locked: true,
+	display_in_list: false
 },{
 	internal_name: 'shift_start',
 	field_type: 'datetime',
@@ -93,7 +114,9 @@ starter_fields = [{
 	alt_input_label: 'When should the shift start?',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	input_type: 'time',
-	position: 8
+	position: 8,
+	locked: true,
+	display_in_list: false
 },{
 	internal_name: 'shift_end',
 	field_type: 'datetime',
@@ -102,7 +125,9 @@ starter_fields = [{
 	alt_input_label: 'When should the shift end?',
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
 	input_type: 'time',
-	position: 9
+	position: 9,
+	locked: true,
+	display_in_list: false
 },{
 	internal_name: 'trade_preference',
 	field_type: 'integer',
@@ -111,17 +136,20 @@ starter_fields = [{
 	input_label: 'Do you want a trade for this shift?',
 	value_labels: ['No Trade', 'Open to Trade', 'Trade Only'],
 	input_value_labels: ['No Thanks', "I'm Open", 'Trade Required'],
-	position: 10
+	position: 10,
+	display_in_list: true,
+	list_row: 2,
+	list_column: 3
 },{
 	internal_name: 'trade_dates',
 	field_type: 'string',
 	is_visible: true,
 	filter_label: 'Trade Dates',
 	alt_filter_label: nil,
-	alt_filter_label_conditions: [{exists: true}, {field: 'trade_preference', value:[1,2], logic: 'AND'}],
+	alt_filter_label_conditions: [{exists: true}, {field: 'trade_preference', value: 0, logic: 'AND'}],
 	input_label: 'What dates would you be open to trading for?',
 	alt_input_label: nil,
-	alt_input_label_conditions: [{field: 'trade_preference', value:[1,2]}],
+	alt_input_label_conditions: [{field: 'trade_preference', value: 0}],
 	input_type: 'text',
 	position: 11
 },{

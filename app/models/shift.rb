@@ -3,6 +3,7 @@ class Shift
 	include Mongoid::Timestamps
 
 	belongs_to :user
+	field :user_email, type: String
 
 	def self.add_shift_field(shift_field)
 		field shift_field.internal_name.to_sym, type: shift_field.db_type
@@ -28,8 +29,12 @@ class Shift
 		super(modified_end)
 	end
 
+	def as_json(options)
+		super(options.merge(methods: [:id]))
+	end
+
 	def self.find_with_email(id)
-		select('shifts.*, users.email').where(id: id).joins(:user).first
+		where(id: id).first
 	end
 
 	def self.with_filters(filters, current_user)
@@ -53,7 +58,7 @@ class Shift
 
 		filters[:shift_letter]&.map! {|l| l.upcase }
 
-		select('shifts.*, users.email').where(filters).where.not(user_id: current_user.id).joins(:user)
+		where(filters.merge({:user_id.ne => current_user.id}))
 	end
 
 	def self.create_dummy(*user_ids)

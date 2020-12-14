@@ -29,8 +29,17 @@ class ShiftField
 	field :input_value_labels, type: Array
 	# the position in the field order this field should display
 	field :position, type: Integer
+	# is this field's internal name, field_type, and visibility hard coded into the front end?
+	field :locked, type: Boolean, default: false
+	# should this field be displayed in the list view?
+	field :display_in_list, type: Boolean, default: false
+	field :list_row, type: Integer
+	field :list_column, type: Integer
 
 	validates :internal_name, presence: true, uniqueness: true
+
+	after_save :update_map
+	after_destroy :update_map
 
 	def db_type
 		case field_type
@@ -45,5 +54,13 @@ class ShiftField
 		when 'date'
 			Date
 		end
+	end
+
+	def update_map
+		@@map = nil
+	end
+
+	def self.as_map
+		@@map ||= each.with_object({}) {|v, o| o[v.internal_name] = v}
 	end
 end
