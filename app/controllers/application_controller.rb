@@ -10,4 +10,8 @@ class ApplicationController < ActionController::API
 	def admin_only
 		render json: {}, status: :unauthorized if !current_user.admin?
 	end
+
+	def is_unversioned?
+		request.headers['Api-Version'].blank?
+	end
 end

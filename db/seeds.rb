@@ -82,7 +82,7 @@ starter_fields = [{
 	list_row: 2,
 	list_column: 1
 },{
-	internal_name: 'timeframe',
+	internal_name: 'time_frame',
 	field_type: 'integer',
 	is_visible: true,
 	filter_label: '12, 24, or Other?',

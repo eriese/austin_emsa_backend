@@ -9,11 +9,17 @@ class ShiftsController < ApplicationController
 			filters = filter_params
 			@shifts = Shift.unscoped.with_filters(filters, current_user)
 		end
+		@shifts = @shifts.map { |s| s.as_backwards_compatible_json } if is_unversioned?
 		render json: @shifts, status: :ok
 	end
 
 	def create
-		@shift = current_user.shifts.new(shift_params.merge({user_email: current_user.email}))
+		if is_unversioned?
+			@shift = Shift.new_from_old_api(shift_params.merge({email: current_user.email, user_id: current_user.id}))
+		else
+			@shift = current_user.shifts.new(shift_params.merge(email: current_user.email))
+		end
+
 		if @shift.save
 			render json: @shift, status: :ok
 		else
@@ -24,6 +30,7 @@ class ShiftsController < ApplicationController
 	def show
 		@shift = Shift.unscoped.find_with_email(params[:id])
 		if @shift
+			@shift = @shift.as_backwards_compatible_json if is_unversioned?
 			render json: @shift, status: :ok
 		else
 			render json: {}, status: :not_found

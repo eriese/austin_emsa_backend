@@ -38,7 +38,7 @@ class User
 	# field :locked_at,              type: Time
 
 	index({ email: 1 }, unique: true, sparse: true)
-	index({reset_password_token: 1}, unique: true)
+	index({reset_password_token: 1}, unique: true, sparse: true)
 
 	has_many :access_grants,
 					 class_name: 'Doorkeeper::AccessGrant',
@@ -82,8 +82,8 @@ class User
 		self.class.approve(id)
 	end
 
-	def self.approve(user_ids)
-		if User.where(id: user_ids).update_all(approved: true) > 0
+	def self.approve(*user_ids)
+		if User.where(id: user_ids).update_all(approved: true).modified_count > 0
 			codes = RedemptionCode.unassigned.limit(user_ids.size)
 			User.where(id: user_ids, approved: true).each_with_index do |u, i|
 				codes[i].update(user_id: u.id) if u.redemption_codes.empty?
