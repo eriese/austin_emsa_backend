@@ -170,4 +170,3 @@ production:
       # Use environment variables or a config file to keep your
       # credentials safe e.g. <%#= ENV['MONGODB_URI'] %>.
       uri: <%= ENV['MONGODB_URI'] %>
-      database: austin_emsa_<%= ENV['CNAME'] || 'production' %>
