@@ -1,2 +1,2 @@
-web: rails s -p $PORT
+web: bin/qgtunnel rails s -p $PORT
 worker: rake jobs:work
