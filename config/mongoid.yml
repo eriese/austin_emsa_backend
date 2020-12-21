@@ -169,11 +169,11 @@ production:
       # replica set connection setup.
       # Use environment variables or a config file to keep your
       # credentials safe e.g. <%#= ENV['MONGODB_URI'] %>.
-      # uri: <%#= ENV['MONGODB_URI'] %>
-      database: austin_emsa_<%= ENV['CNAME'] %>
-      hosts: <%= (ENV['DB_HOSTS'] || '').split(',') %>
-      options:
-        user: <%= ENV['DB_USER'] %>
-        password: '<%= ENV['DB_PASSWORD'] %>'
-        ssl: true
-        auth_source: admin
+      uri: <%= ENV['MONGODB_URI'] %>
+      # database: austin_emsa_<%= ENV['CNAME'] %>
+      # hosts: <%#= (ENV['DB_HOSTS'] || '').split(',') %>
+      # options:
+      #   user: <%#= ENV['DB_USER'] %>
+      #   password: '<%#= ENV['DB_PASSWORD'] %>'
+      #   ssl: true
+      #   auth_source: admin
