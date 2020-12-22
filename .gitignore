@@ -28,3 +28,5 @@
 
 #ignore database exports
 *_export*.csv
+
+!*.so
