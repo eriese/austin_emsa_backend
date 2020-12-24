@@ -50,7 +50,7 @@ class User
 					 foreign_key: :resource_owner_id,
 					 dependent: :delete_all # or :destroy if you need callbacks
 
-	has_many :shifts
+	has_many :shifts, dependent: :delete_all
 	has_many :redemption_codes
 
 	after_create { AdminDigestJob.schedule }

@@ -42,7 +42,7 @@ class Shift
 	end
 
 	def self.new_from_old_api(new_attrs)
-		OLD_API_VALUES.each {|k,v| new_attrs[k] = v.index(new_attrs[k]) if new_attrs.has_key?(k)}
+		OLD_API_VALUES.each {|k,v| new_attrs[k] = v.index(new_attrs[k].to_s) if new_attrs.has_key?(k)}
 		self.new(new_attrs)
 	end
 
