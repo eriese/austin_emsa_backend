@@ -1,0 +1,9 @@
+
+#!/bin/bash
+if [ "$CNAME" == "production" ]; then
+cp .qgtunnel.production .qgtunnel
+else
+cp .qgtunnel.sandbox .qgtunnel
+fi
+
+bin/qgtunnel $@
