@@ -54,7 +54,11 @@ class ShiftsController < ApplicationController
 	end
 
 	def shift_config
-		render json: {config: AdminConfig.config, fields: ShiftField.as_map}, status: :ok
+		if is_unversioned?
+			render json: AdminConfig.config, status: :ok
+		else
+			render json: {config: AdminConfig.config, fields: ShiftField.as_map}, status: :ok
+		end
 	end
 
 	private
