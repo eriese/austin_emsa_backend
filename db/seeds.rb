@@ -164,3 +164,5 @@ starter_fields = [{
 	position: 12
 }]
 ShiftField.create(starter_fields)
+
+AdminConfig.create(key: 'email_warning', value: '**REMINDER: This app is to help match trades and FYOC requests. To complete trades, use the Telestaff website. To complete FYOC, make sure both parties have agreed through email and forward to EMSSchedulers@austintexas.gov. FYOC requests less than 72 hours will require command approval.**')

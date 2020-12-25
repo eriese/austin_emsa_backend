@@ -1,5 +1,6 @@
 class RedemptionCode
 	include Mongoid::Document
+	include Mongoid::Timestamps
 
 	belongs_to :user, optional: true
 	field :code, type: String
