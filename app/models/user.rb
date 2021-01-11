@@ -64,7 +64,7 @@ class User
 	end
 
 	def as_json(options = {})
-		super(only: [:id, :email, :approved, :admin])
+		super(only: [:_id, :email, :approved, :admin])
 	end
 
 	def should_auto_approve?
@@ -83,11 +83,14 @@ class User
 	end
 
 	def self.approve(*user_ids)
-		if User.where(id: user_ids).update_all(approved: true).modified_count > 0
+		Rails.logger.debug("approving user ids: #{user_ids}")
+		users_approved = User.where(:id.in => user_ids).update(approved: true).modified_count
+		if users_approved > 0
 			codes = RedemptionCode.unassigned.limit(user_ids.size)
-			User.where(id: user_ids, approved: true).each_with_index do |u, i|
-				codes[i].update(user_id: u.id) if u.redemption_codes.empty?
-				ApprovedMailer.approved_email(u.id).deliver_later
+			User.where(:id.in => user_ids, approved: true).each_with_index do |u, i|
+				codes[i].update(user_id: u.id) if u.redemption_codes.empty? && codes.any?
+				# TODO this feels hacky to use to to_s
+				ApprovedMailer.approved_email(u.id.to_s).deliver_later
 			end
 			true
 		else
