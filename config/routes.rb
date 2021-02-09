@@ -29,5 +29,9 @@ Rails.application.routes.draw do
 	get '/users', to: 'users#index'
 	post '/bulk_approved', to: 'users#bulk_approved'
 	post '/bulk_admin', to: 'users#bulk_admin'
+
+	get '/key_codes', to: 'sheets#show', defaults: {name: 'key_codes'}
+	post '/sheets', to: 'sheets#create'
+
 	resources :admin, only: [:index, :update]
 end
