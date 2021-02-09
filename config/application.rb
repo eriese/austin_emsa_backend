@@ -39,5 +39,11 @@ module AustinEmsaBackend
 	config.active_job.queue_adapter = :delayed_job
 
 	config.action_mailer.default_url_options = routes.default_url_options
+
+	config.middleware.insert_before 0, Rack::Cors do
+		allow do
+			origins '*'
+			resource 'sheets', headers: :any, methods: [:post, :head]
+		end
 	end
 end
