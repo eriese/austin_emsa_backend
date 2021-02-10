@@ -10,15 +10,15 @@ class Spreadsheet
 	after_save :update_map
 	after_destroy :remove_from_map
 
+	def update_map
+		@@map[name] = self
+	end
+
+	def remove_from_map
+		@@map.delete(name)
+	end
+
 	def self.by_name(name)
 		@@map[name] ||= Spreadsheet.find_by(name: name)
-	end
-
-	def self.update_map(sheet)
-		@@map[sheet.name] = sheet
-	end
-
-	def self.remove_from_map(sheet)
-		@@map.delete(sheet.name)
 	end
 end
