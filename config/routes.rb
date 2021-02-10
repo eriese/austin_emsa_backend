@@ -15,7 +15,8 @@ Rails.application.routes.draw do
 	},
 	controllers: {
 		registrations: 'registrations',
-		passwords: 'passwords'
+		passwords: 'passwords',
+		confirmations: 'confirmations'
 	},
 	skip: [:sessions]
 	# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

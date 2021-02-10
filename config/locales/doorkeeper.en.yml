@@ -116,6 +116,7 @@ en:
         invalid_grant: Invalid email or password
         unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
         not_approved: Sorry! Your account has not been approved by your administrator yet, so we can't log you in. You will receive an email when your account is activated
+        unconfirmed: Oops! We stepped up security, so you have to confirm your email address before continuing. Click the 'Request New Email Confirmation' button below to get confirmation instructions
 
         invalid_token:
           revoked: "The access token was revoked"

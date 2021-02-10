@@ -5,6 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
 	def create
 		super do |resource|
 			resource.auto_approve
+			resource.reload
 		end
 	end
 end

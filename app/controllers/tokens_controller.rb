@@ -1,5 +1,4 @@
 class TokensController < Doorkeeper::TokensController
-
 	def revoke
 		if token.blank?
 			render json: {}, status: 200

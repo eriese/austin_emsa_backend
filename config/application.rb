@@ -21,29 +21,30 @@ Bundler.require(*Rails.groups)
 
 module AustinEmsaBackend
 	class Application < Rails::Application
-	# Initialize configuration defaults for originally generated Rails version.
-	config.load_defaults 6.0
+		# Initialize configuration defaults for originally generated Rails version.
+		config.load_defaults 6.0
 
-	# Settings in config/environments/* take precedence over those specified here.
-	# Application configuration can go into files in config/initializers
-	# -- all .rb files in that directory are automatically loaded after loading
-	# the framework and any gems in your application.
+		# Settings in config/environments/* take precedence over those specified here.
+		# Application configuration can go into files in config/initializers
+		# -- all .rb files in that directory are automatically loaded after loading
+		# the framework and any gems in your application.
 
-	# Only loads a smaller set of middleware suitable for API only apps.
-	# Middleware like session, flash, cookies can be added back manually.
-	# Skip views, helpers and assets when generating a new resource.
-	config.api_only = true
+		# Only loads a smaller set of middleware suitable for API only apps.
+		# Middleware like session, flash, cookies can be added back manually.
+		# Skip views, helpers and assets when generating a new resource.
+		config.api_only = true
 
-	config.session_store :disabled
+		config.session_store :disabled
 
-	config.active_job.queue_adapter = :delayed_job
+		config.active_job.queue_adapter = :delayed_job
 
-	config.action_mailer.default_url_options = routes.default_url_options
+		config.action_mailer.default_url_options = routes.default_url_options
 
-	config.middleware.insert_before 0, Rack::Cors do
-		allow do
-			origins '*'
-			resource 'sheets', headers: :any, methods: [:post, :head]
+		config.middleware.insert_before 0, Rack::Cors do
+			allow do
+				origins '*'
+				resource 'sheets', headers: :any, methods: [:post, :head]
+			end
 		end
 	end
 end
