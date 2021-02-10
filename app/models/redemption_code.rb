@@ -16,7 +16,7 @@ class RedemptionCode
 	def self.bulk_upload(codes)
 		now = Time.now
 		bulk_insert = codes.map { |c| {code: c, created_at: now, updated_at: now } }
-		insert_all(bulk_insert)
+		collection.insert_many(bulk_insert)
 	end
 
 	def self.icontact_assign(*details)
