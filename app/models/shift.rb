@@ -37,7 +37,10 @@ class Shift
 
 	def as_backwards_compatible_json
 		orig = as_json
-		OLD_API_VALUES.each {|k,v| orig[k] = v[send(k)]}
+		OLD_API_VALUES.each do |k,v|
+			val = send(k)
+			orig[k] = v[val] if val
+		end
 		orig
 	end
 

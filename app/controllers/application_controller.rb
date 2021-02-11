@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
 	end
 
 	def is_unversioned?
-		request.headers['Api-Version'].blank?
+		ApplicationController.request_is_unversioned?(request)
 	end
 
 	def token_response(user_id, *scopes)
@@ -35,5 +35,9 @@ class ApplicationController < ActionController::API
 				break token
 			end
 		end
+	end
+
+	def self.request_is_unversioned?(request)
+		request.headers['Api-Version'].blank?
 	end
 end

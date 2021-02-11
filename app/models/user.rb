@@ -53,10 +53,16 @@ class User
 	has_many :shifts, dependent: :delete_all
 	has_many :redemption_codes
 
+	attr_accessor :is_legacy
+
 	after_create { AdminDigestJob.schedule }
 
 	def active_for_authentication?
 		super && approved?
+	end
+
+	def confirmation_required?
+		!is_legacy && super
 	end
 
 	def inactive_message
