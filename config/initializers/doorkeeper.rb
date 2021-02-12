@@ -10,7 +10,7 @@ Doorkeeper.configure do
 	resource_owner_from_credentials do |routes|
 		user = User.find_for_database_authentication(email: params[:email])
 		if user&.valid_for_authentication? { user.valid_password?(params[:password]) }
-			user.is_legacy = ApplicationController.request_is_unversioned?(request)
+			user.request_version = ApplicationController.request_version(request)
 			if user.active_for_authentication?
 				user
 			else

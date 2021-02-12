@@ -5,6 +5,8 @@ class ApplicationController < ActionController::API
 		else
 			warden.authenticate(scope: :user, store: false)
 		end
+		@current_user.request_version = ApplicationController.request_version(request)
+		@current_user
 	end
 
 	def admin_only
@@ -37,7 +39,11 @@ class ApplicationController < ActionController::API
 		end
 	end
 
+	def self.request_version(request)
+		request.headers['Api-Version']
+	end
+
 	def self.request_is_unversioned?(request)
-		request.headers['Api-Version'].blank?
+		request_version(request).blank?
 	end
 end

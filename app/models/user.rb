@@ -1,3 +1,5 @@
+require 'api_versioner'
+
 class User
 	include Mongoid::Document
 	include Mongoid::Timestamps
@@ -53,7 +55,7 @@ class User
 	has_many :shifts, dependent: :delete_all
 	has_many :redemption_codes
 
-	attr_accessor :is_legacy
+	attr_accessor :request_version
 
 	after_create { AdminDigestJob.schedule }
 
@@ -62,7 +64,7 @@ class User
 	end
 
 	def confirmation_required?
-		!is_legacy && super
+		ApiVersioner.version_requires?(request_version, :confirmation) && super
 	end
 
 	def inactive_message
