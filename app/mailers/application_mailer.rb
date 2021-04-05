@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-	default from: 'shiftapp@austinemsa.org'
+	default from: ENV['APP_EMAIL']
 	layout 'mailer'
 end
