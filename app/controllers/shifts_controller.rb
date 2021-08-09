@@ -63,7 +63,8 @@ class ShiftsController < ApplicationController
 
 	private
 	def shift_params
-		params.require(:shift).permit(:is_field, :position, :is_offering, :shift_date, :is_ocp, :trade_preference, :shift_start, :shift_end, :shift_letter, :time_frame, :trade_dates, :notes)
+		param_keys = ShiftField.as_map.keys.map { |k| k.intern  }
+		params.require(:shift).permit(param_keys)
 	end
 	def filter_params
 		params.permit(:date_type, is_field: [], position: [], is_offering: [], is_ocp: [], trade_preference: [], date: [], shift_letter: [], time_frame: [])
