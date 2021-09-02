@@ -57,7 +57,7 @@ starter_fields = [{
 	list_column: 1
 },{
 	internal_name: 'unit_number',
-	field_type: 'integer',
+	field_type: 'string',
 	is_visible: true,
 	input_label: 'What unit is the shift with? (optional)',
 	filter_label: 'Unit',
@@ -65,7 +65,7 @@ starter_fields = [{
 	alt_filter_label_conditions: [{exists: true}, {field: 'is_offering', value: false, logic: 'AND'}],
 	alt_input_label: nil,
 	alt_input_label_conditions: [{field: 'is_offering', value: false}],
-	input_type: 'number',
+	input_type: 'string',
 	position: 4
 },{
 	internal_name: 'shift_letter',
